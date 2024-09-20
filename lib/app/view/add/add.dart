@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:moneyexpense/app/base/assets.dart';
 import 'package:moneyexpense/app/base/colors.dart';
 import 'package:moneyexpense/app/base/consts.dart';
 import 'package:moneyexpense/app/helper/extension/string_ext.dart';
 import 'package:moneyexpense/app/helper/extension/widget_ext.dart';
+import 'package:moneyexpense/app/helper/func/func.dart';
 import 'package:moneyexpense/app/state/expense/expense_bloc.dart';
 import 'package:moneyexpense/app/view/add/sub/category.dart';
 import 'package:moneyexpense/app/widget/button_elevated.dart';
@@ -29,6 +31,13 @@ class _PageAddState extends State<PageAdd> {
     // TODO: implement initState
     super.initState();
     _onInit();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    bloc.add(OnExpenseReset());
   }
 
   void _onInit() {
@@ -58,6 +67,7 @@ class _PageAddState extends State<PageAdd> {
 
   Widget _body(ExpenseSuccess state) {
     var category = state.categories[state.copy().indexCategory];
+    var enabled = state.copy().enabled;
     return SingleChildScrollView(
       padding: const EdgeInsets.all(ConsPadding.large),
       child: Column(
@@ -67,6 +77,9 @@ class _PageAddState extends State<PageAdd> {
           _form(
             hint: ConstString.expenceName,
             controller: bloc.conName,
+            onChanged: (value) {
+              bloc.add(OnExpenseChangeName());
+            },
           ),
           _form(
             controller: bloc.conCategory,
@@ -91,19 +104,6 @@ class _PageAddState extends State<PageAdd> {
                     child: IconField(BaseAssets.angleLeftB),
                   ),
                 ).onTap(() {
-                  // Scaffold.of(context).showBottomSheet(
-                  //   (context) => SubMenuAddCategory(
-                  //     categories: state.categories,
-                  //     onSubmit: (index) {
-                  //       bloc.add(OnExpenseChangeCategory(index));
-                  //     },
-                  //   ),
-                  //   shape: const RoundedRectangleBorder(
-                  //     borderRadius: BorderRadius.vertical(
-                  //       top: Radius.circular(ConstNum.radius),
-                  //     ),
-                  //   ),
-                  // );
                   showModalBottomSheet(
                     context: context,
                     barrierColor: Colors.black26,
@@ -116,17 +116,6 @@ class _PageAddState extends State<PageAdd> {
                       );
                     },
                   );
-                  // showBottomSheet(
-                  //   context: context,
-                  //   builder: (context) {
-                  //     return SubMenuAddCategory(
-                  //       categories: state.categories,
-                  //       onSubmit: (index) {
-                  //         bloc.add(OnExpenseChangeCategory(index));
-                  //       },
-                  //     );
-                  //   },
-                  // );
                 });
               },
             ),
@@ -137,17 +126,39 @@ class _PageAddState extends State<PageAdd> {
             hint: ConstString.expenceDate,
             suffix: IconField(
               BaseAssets.calendarAlt,
-            ).onTap(() {}),
+            ).onTap(() async {
+              var initial = DateTime.now();
+              var cDate = state.copy().expenseDate;
+              if (cDate.isNotEmpty) {
+                initial = DateTime.parse(cDate);
+              }
+              var today = DateTime.now();
+              var interval = const Duration(days: 30);
+              var result = await showDatePicker(
+                context: context,
+                initialDate: initial,
+                firstDate: today.subtract(interval),
+                lastDate: today.add(interval),
+                initialEntryMode: DatePickerEntryMode.calendarOnly,
+                locale: const Locale("id", "ID"),
+              );
+              if (result != null) {
+                bloc.add(OnExpenseChangeDate(result.toString()));
+              }
+            }),
           ),
           _form(
             controller: bloc.conNominal,
-            readOnly: true,
             hint: ConstString.nominal,
+            type: TextInputType.number,
+            onChanged: (value) {
+              bloc.add(OnExpenseChangeNominal());
+            },
           ),
-          const ButtonElevated(
+          ButtonElevated(
             ConstString.save,
-            enabled: true,
-            padding: EdgeInsets.only(
+            enabled: enabled,
+            padding: const EdgeInsets.only(
               top: ConsPadding.medium,
             ),
           ),
@@ -162,6 +173,8 @@ class _PageAddState extends State<PageAdd> {
     Widget? preffix,
     bool readOnly = false,
     TextEditingController? controller,
+    TextInputType? type,
+    Function(String value)? onChanged,
   }) {
     return CField(
       controller: controller,
@@ -169,6 +182,8 @@ class _PageAddState extends State<PageAdd> {
       suffix: suffix,
       preffix: preffix,
       readOnly: readOnly,
+      type: type,
+      onChanged: onChanged,
       padding: const EdgeInsets.only(
         bottom: ConsPadding.medium,
       ),

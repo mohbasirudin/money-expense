@@ -15,19 +15,27 @@ class ExpenseLoading extends ExpenseState {}
 class ExpenseSuccess extends ExpenseState {
   final List<CategoryData> categories;
   final int indexCategory;
+  final String expenseDate;
+  final bool enabled;
 
   const ExpenseSuccess({
     this.categories = const [],
     this.indexCategory = 0,
+    this.expenseDate = "",
+    this.enabled = false,
   });
 
   ExpenseSuccess copy({
     var categories,
     var indexCategory,
+    var expenseDate,
+    var enabled,
   }) {
     return ExpenseSuccess(
       categories: categories ?? this.categories,
       indexCategory: indexCategory ?? this.indexCategory,
+      expenseDate: expenseDate ?? this.expenseDate,
+      enabled: enabled ?? this.enabled,
     );
   }
 
@@ -36,6 +44,8 @@ class ExpenseSuccess extends ExpenseState {
   List<Object?> get props => [
         categories,
         indexCategory,
+        expenseDate,
+        enabled,
       ];
 }
 

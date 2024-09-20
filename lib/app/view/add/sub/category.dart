@@ -83,7 +83,7 @@ class _SubMenuAddCategoryState extends State<SubMenuAddCategory> {
           Container(
             width: 36,
             height: 36,
-            margin: EdgeInsets.only(
+            margin: const EdgeInsets.only(
               bottom: ConsPadding.medium * 0.25,
             ),
             decoration: BoxDecoration(

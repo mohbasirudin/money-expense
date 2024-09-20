@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:moneyexpense/app/db/repo/category.dart';
 import 'package:moneyexpense/app/db/table/category/category.dart';
 import 'package:moneyexpense/app/helper/extension/string_ext.dart';
+import 'package:moneyexpense/app/helper/func/func.dart';
 
 part 'expense_event.dart';
 
@@ -19,7 +20,20 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
 
   ExpenseBloc() : super(ExpenseInitial()) {
     on<OnExpenseInit>(_onInit);
+    on<OnExpenseReset>(_onReset);
+    on<OnExpenseChangeName>(_onChangeName);
     on<OnExpenseChangeCategory>(_onChangeCategory);
+    on<OnExpenseChangeDate>(_onChangeDate);
+    on<OnExpenseChangeNominal>(_onChangeNominal);
+  }
+
+  void _onReset(var event, var emit) {
+    conName.clear();
+    conCategory.clear();
+    conDate.clear();
+    conNominal.clear();
+
+    emit(ExpenseInitial());
   }
 
   Future<void> _onInit(var event, var emit) async {
@@ -37,6 +51,20 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
     }
   }
 
+  bool isEnabled() {
+    return conName.text.isNotEmpty &&
+        conCategory.text.isNotEmpty &&
+        conDate.text.isNotEmpty &&
+        conNominal.text.isNotEmpty;
+  }
+
+  void _onChangeName(var event, var emit) {
+    final state = this.state;
+    if (state is ExpenseSuccess) {
+      emit(state.copy(enabled: isEnabled()));
+    }
+  }
+
   void _onChangeCategory(OnExpenseChangeCategory event, var emit) {
     final state = this.state;
     if (state is ExpenseSuccess) {
@@ -44,7 +72,31 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
       conCategory.text = state.categories[index].name.toCapitalized();
       emit(state.copy(
         indexCategory: index,
+        enabled: isEnabled(),
       ));
+    }
+  }
+
+  void _onChangeDate(OnExpenseChangeDate event, var emit) {
+    final state = this.state;
+    if (state is ExpenseSuccess) {
+      var value = event.value;
+      conDate.text = Func.formatter(
+        value,
+        newFormat: "EEEE, dd MMMM yyyy",
+      );
+
+      emit(state.copy(
+        expenseDate: value,
+        enabled: isEnabled(),
+      ));
+    }
+  }
+
+  void _onChangeNominal(var event, var emit) {
+    final state = this.state;
+    if (state is ExpenseSuccess) {
+      emit(state.copy(enabled: isEnabled()));
     }
   }
 }

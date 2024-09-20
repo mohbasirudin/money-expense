@@ -7,6 +7,7 @@ import 'package:moneyexpense/app/base/consts.dart';
 import 'package:moneyexpense/app/routes/init.dart';
 import 'package:moneyexpense/app/state/expense/expense_bloc.dart';
 import 'package:moneyexpense/app/state/main/main_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
@@ -28,6 +29,14 @@ class _MainAppState extends State<MainApp> {
       MaterialApp(
         initialRoute: Routes.root,
         onGenerateRoute: Routes.router.generator,
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale("id","ID"),
+        ],
         theme: ThemeData(
           canvasColor: BaseColors.light,
           fontFamily: FontFamily.sourceSansPro,

@@ -11,6 +11,8 @@ class CField extends StatefulWidget {
   final Widget? preffix;
   final bool readOnly;
   final TextEditingController? controller;
+  final TextInputType? type;
+  final Function(String value)? onChanged;
 
   const CField({
     this.padding,
@@ -19,6 +21,8 @@ class CField extends StatefulWidget {
     this.preffix,
     this.readOnly = false,
     this.controller,
+    this.type,
+    this.onChanged,
     super.key,
   });
 
@@ -32,6 +36,9 @@ class _CFieldState extends State<CField> {
     return TextField(
       controller: widget.controller,
       cursorColor: BaseColors.primary,
+      keyboardType: widget.type ?? TextInputType.text,
+      textInputAction: TextInputAction.done,
+      onChanged: widget.onChanged,
       style: const TextStyle(
         fontWeight: FontWeight.w400,
         fontFamily: FontFamily.sourceSansPro,
