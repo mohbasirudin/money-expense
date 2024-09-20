@@ -7,9 +7,12 @@ import 'package:moneyexpense/app/state/main/main_bloc.dart';
 import 'package:moneyexpense/app/widget/text.dart';
 
 class SubMainTop extends StatefulWidget {
-  // final MainSuccess state;
+  final MainSuccess state;
 
-  const SubMainTop({super.key});
+  const SubMainTop(
+    this.state, {
+    super.key,
+  });
 
   @override
   State<SubMainTop> createState() => _SubMainTopState();
@@ -43,7 +46,7 @@ class _SubMainTopState extends State<SubMainTop> {
           children: [
             _item(
               ConstString.expenseToday,
-              nominal: 30000.toRp(),
+              nominal: widget.state.amountToday.toRp(),
               color: BaseColors.primary,
             ).expanded(),
             const SizedBox(
@@ -51,7 +54,7 @@ class _SubMainTopState extends State<SubMainTop> {
             ),
             _item(
               ConstString.expenseThisMonth,
-              nominal: 50000.toRp(),
+              nominal: widget.state.amountThisMonth.toRp(),
               color: BaseColors.green2,
             ).expanded(),
           ],

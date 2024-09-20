@@ -125,11 +125,15 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
   void _onSave(OnExpenseSave event, var emit) async {
     final state = this.state;
     if (state is ExpenseSuccess) {
+      var categories = state.categories;
+      var indexCategory=state.copy().indexCategory;
       var result = await LocalExpense.add(
         name: conName.text,
-        category: state.copy().indexCategory,
         date: state.copy().expenseDate,
         nominal: conNominal.text,
+        categoryName: categories[indexCategory].name,
+        categoryIcon: categories[indexCategory].icon,
+        categoryColor: categories[indexCategory].color,
       );
       event.onCallback(result);
     }

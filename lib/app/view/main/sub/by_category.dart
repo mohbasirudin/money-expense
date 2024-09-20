@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:moneyexpense/app/base/consts.dart';
 import 'package:moneyexpense/app/helper/extension/widget_ext.dart';
+import 'package:moneyexpense/app/state/main/main_bloc.dart';
 import 'package:moneyexpense/app/widget/text.dart';
 
 class SubMainByCategory extends StatefulWidget {
-  const SubMainByCategory({super.key});
+  final MainSuccess state;
+
+  const SubMainByCategory(this.state, {super.key});
 
   @override
   State<SubMainByCategory> createState() => _SubMainByCategoryState();

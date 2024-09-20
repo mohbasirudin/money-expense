@@ -11,6 +11,8 @@ class ConstString {
   static const save = "Simpan";
   static const success = "Berhasil";
   static const failed = "Gagal";
+  static const today = "Hari ini";
+  static const yesterday = "Kemarin";
   static const chooseCategory = "Pilih Kategori";
 }
 

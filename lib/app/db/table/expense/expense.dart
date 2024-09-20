@@ -8,11 +8,15 @@ class Expense extends Table {
 
   TextColumn get name => text()();
 
-  IntColumn get category => integer()();
-
   TextColumn get date => text()();
 
   TextColumn get nominal => text()();
+
+  TextColumn get categoryName => text()();
+
+  TextColumn get categoryIcon => text()();
+
+  TextColumn get categoryColor => text()();
 }
 
 @DriftDatabase(tables: [Expense])
