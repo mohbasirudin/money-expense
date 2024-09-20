@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:moneyexpense/app/main.dart';
+import 'package:moneyexpense/app/view/main/main.dart';
 
-void main() => runApp(const MaterialApp(home: PageHome()));
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  runApp(const MaterialApp(
+    home: PageHome(),
+  ));
+}
