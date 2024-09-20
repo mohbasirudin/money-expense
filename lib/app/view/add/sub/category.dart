@@ -66,6 +66,7 @@ class _SubMenuAddCategoryState extends State<SubMenuAddCategory> {
             },
             padding: const EdgeInsets.only(
               top: ConsPadding.medium * 1.2,
+              bottom: ConsPadding.large,
             ),
           ),
         ],
