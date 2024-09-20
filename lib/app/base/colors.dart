@@ -14,6 +14,8 @@ class BaseColors {
   static var green2 = _color(ColorsCode.green2);
   static var light = Colors.white;
   static var gray3 = _color(ColorsCode.gray3);
+  static var outline = _color(ColorsCode.ouline);
+  static var hint = _color(ColorsCode.hint);
 }
 
 class ColorsCode {
@@ -28,6 +30,8 @@ class ColorsCode {
   static var red = "EB5757";
   static var green2 = "46B5A7";
   static var gray3 = "828282";
+  static var ouline = "E0E0E0";
+  static var hint = "828282";
 }
 
 Color _color(var code) {

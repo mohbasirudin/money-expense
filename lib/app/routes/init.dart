@@ -2,6 +2,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:moneyexpense/app/view/add/add.dart';
 import 'package:moneyexpense/app/view/main/main.dart';
+import 'package:moneyexpense/app/widget/error.dart';
 import 'package:moneyexpense/app/widget/text.dart';
 
 class Routes {
@@ -12,7 +13,7 @@ class Routes {
 
   static void configure() {
     router.notFoundHandler = _handler((_, params) {
-      return const CText("Not Found!");
+      return const PageError(message: "Not Found!");
     });
 
     _routes(root, (params) => const PageHome());

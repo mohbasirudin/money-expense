@@ -4,6 +4,11 @@ class ConstString {
   static const expenseToday = "Pengeluaranmu hari ini";
   static const expenseThisMonth = "Pengeluaranmu bulan ini";
   static const expenseByCategory = "Pengeluaran berdasarkan kategori";
+  static const addNewExpense = "Tambah Pengeluaran Baru";
+  static const expenceName = "Nama Pengeluaran";
+  static const expenceDate = "Tanggal Pengeluaran";
+  static const nominal = "Nominal";
+  static const save = "Simpan";
 }
 
 class ConstNum {

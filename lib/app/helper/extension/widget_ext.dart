@@ -5,9 +5,16 @@ extension WidgetExt on Widget {
     return Expanded(child: this);
   }
 
-  Widget padding(EdgeInsets value) {
+  Widget padding(EdgeInsets? value) {
     return Padding(
-      padding: value,
+      padding: value ?? EdgeInsets.zero,
+      child: this,
+    );
+  }
+
+  Widget onTap(Function() tap) {
+    return GestureDetector(
+      onTap: tap,
       child: this,
     );
   }

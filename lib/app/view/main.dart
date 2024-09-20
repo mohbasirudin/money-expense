@@ -1,7 +1,9 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moneyexpense/app/base/assets.dart';
 import 'package:moneyexpense/app/base/colors.dart';
+import 'package:moneyexpense/app/base/consts.dart';
 import 'package:moneyexpense/app/routes/init.dart';
 import 'package:moneyexpense/app/state/expense/expense_bloc.dart';
 import 'package:moneyexpense/app/state/main/main_bloc.dart';
@@ -28,8 +30,20 @@ class _MainAppState extends State<MainApp> {
         onGenerateRoute: Routes.router.generator,
         theme: ThemeData(
           canvasColor: BaseColors.light,
+          fontFamily: FontFamily.sourceSansPro,
           floatingActionButtonTheme: FloatingActionButtonThemeData(
             backgroundColor: BaseColors.primary,
+          ),
+          progressIndicatorTheme: ProgressIndicatorThemeData(
+            color: BaseColors.primary,
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: BaseColors.primary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(ConstNum.radius * 0.5),
+              ),
+            ),
           ),
         ),
       ),
