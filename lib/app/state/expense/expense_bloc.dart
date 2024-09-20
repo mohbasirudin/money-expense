@@ -134,7 +134,7 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
       var result = await LocalExpense.add(
         name: conName.text,
         date: state.copy().expenseDate,
-        nominal: conNominal.text,
+        nominal: conNominal.text.currency(),
         categoryName: categories[indexCategory].name,
         categoryIcon: categories[indexCategory].icon,
         categoryColor: categories[indexCategory].color,

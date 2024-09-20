@@ -26,6 +26,14 @@ extension StrExt on String {
     }
   }
 
+  String currency() {
+    try {
+      return lower().replaceAll("rp", "").replaceAll(".", "");
+    } catch (e) {
+      return "0";
+    }
+  }
+
   String toCapitalized() {
     return replaceAll(RegExp(' +'), ' ')
         .split(' ')

@@ -8,6 +8,7 @@ import 'package:moneyexpense/app/helper/extension/string_ext.dart';
 import 'package:moneyexpense/app/helper/extension/widget_ext.dart';
 import 'package:moneyexpense/app/helper/func/func.dart';
 import 'package:moneyexpense/app/helper/func/globals.dart';
+import 'package:moneyexpense/app/helper/func/triggers.dart';
 import 'package:moneyexpense/app/state/expense/expense_bloc.dart';
 import 'package:moneyexpense/app/view/add/sub/category.dart';
 import 'package:moneyexpense/app/widget/button_elevated.dart';
@@ -163,9 +164,12 @@ class _PageAddState extends State<PageAdd> {
               top: ConsPadding.medium,
             ),
             onTap: () {
-              bloc.add(OnExpenseSave((result) {
+              bloc.add(OnExpenseSave((result) async {
                 snackbar(context, result);
-                if (result) bloc.add(OnExpenseReload());
+                if (result) {
+                  bloc.add(OnExpenseReload());
+                  await Sync.main(context);
+                }
               }));
             },
           ),

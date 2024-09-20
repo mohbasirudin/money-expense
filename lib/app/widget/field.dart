@@ -1,4 +1,6 @@
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:moneyexpense/app/base/assets.dart';
 import 'package:moneyexpense/app/base/colors.dart';
 import 'package:moneyexpense/app/base/consts.dart';
@@ -33,7 +35,17 @@ class CField extends StatefulWidget {
 class _CFieldState extends State<CField> {
   @override
   Widget build(BuildContext context) {
+    var formatters = <TextInputFormatter>[];
+    if (widget.type == TextInputType.number) {
+      formatters = [
+        CurrencyTextInputFormatter.simpleCurrency(
+          locale: "id",
+          decimalDigits: 0,
+        ),
+      ];
+    }
     return TextField(
+      inputFormatters: formatters,
       controller: widget.controller,
       cursorColor: BaseColors.primary,
       keyboardType: widget.type ?? TextInputType.text,

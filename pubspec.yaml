@@ -46,6 +46,7 @@ dependencies:
   sqlite3_flutter_libs: ^0.5.18
   intl: ^0.18.0
   sqlite3:
+  currency_text_input_formatter: ^2.2.4
 
 dev_dependencies:
   flutter_test:
