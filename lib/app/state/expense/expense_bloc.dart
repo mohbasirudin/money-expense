@@ -62,6 +62,10 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
     emit(ExpenseLoading());
     try {
       var categories = await LocalCategory.all();
+      if (categories.isEmpty) {
+        await LocalCategory.sync();
+        categories = await LocalCategory.all();
+      }
       var indexCategory = 0;
       conCategory.text = categories[indexCategory].name.toCapitalized();
       emit(ExpenseSuccess(
@@ -126,7 +130,7 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
     final state = this.state;
     if (state is ExpenseSuccess) {
       var categories = state.categories;
-      var indexCategory=state.copy().indexCategory;
+      var indexCategory = state.copy().indexCategory;
       var result = await LocalExpense.add(
         name: conName.text,
         date: state.copy().expenseDate,

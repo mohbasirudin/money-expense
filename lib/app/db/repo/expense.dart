@@ -14,7 +14,6 @@ class LocalExpense {
     required String categoryName,
     required String categoryIcon,
     required String categoryColor,
-
   }) async {
     if (_tb == null) await _init();
     try {
@@ -25,7 +24,6 @@ class LocalExpense {
         categoryName: Value(categoryName),
         categoryIcon: Value(categoryIcon),
         categoryColor: Value(categoryColor),
-
       );
       var result = await _tb!.create(data);
       return result;
@@ -46,12 +44,6 @@ class LocalExpense {
 
   static Future<num> amountToday(List<ExpenseData> data) async {
     try {
-      // var newData = <ExpenseData>[];
-      // for (var i = 0; i < data.length; i++) {
-      //   var date = Func.formatter(data[i].date);
-      //   var today = Func.formatter(DateTime.now().toString());
-      //   if (date == today) newData.add(data[i]);
-      // }
       num amount = 0;
       for (var i = 0; i < data.length; i++) {
         amount = amount + num.parse(data[i].nominal);
@@ -102,8 +94,11 @@ class LocalExpense {
     try {
       var newData = <ExpenseData>[];
       for (var i = 0; i < data.length; i++) {
-        var date = DateTime.parse(data[i].date);
-        var before = DateTime.now().subtract(const Duration(days: 1));
+        var date = Func.formatter(data[i].date);
+        var before = Func.formatter(
+          DateTime.now().subtract(const Duration(days: 1)).toString(),
+        );
+        print("yesterday: $date, $before");
         if (date == before) newData.add(data[i]);
       }
       return newData;

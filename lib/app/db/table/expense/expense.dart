@@ -32,6 +32,7 @@ class TbExpense extends _$TbExpense {
       var result = await into(expense).insert(data);
       return result > 0;
     } catch (e) {
+      print("gagal: $e");
       return false;
     }
   }
