@@ -70,17 +70,16 @@ class _SubMainByDateState extends State<SubMainByDate> {
   }
 
   Widget _item(ExpenseData data) {
-
     return Container(
-      padding: EdgeInsets.all(ConsPadding.medium),
+      padding: const EdgeInsets.all(ConsPadding.medium),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(ConstNum.radius),
         color: BaseColors.light,
         boxShadow: [
           BoxShadow(
-            spreadRadius: 8,
+            spreadRadius: 4,
             blurRadius: 8,
-            offset: Offset(4, 4),
+            offset: const Offset(0, 4),
             color: Colors.black.withOpacity(0.08),
           ),
         ],

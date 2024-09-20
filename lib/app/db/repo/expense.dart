@@ -1,5 +1,7 @@
 import 'package:drift/drift.dart';
+import 'package:moneyexpense/app/db/model/expense_by_category.dart';
 import 'package:moneyexpense/app/db/table/expense/expense.dart';
+import 'package:moneyexpense/app/helper/extension/string_ext.dart';
 import 'package:moneyexpense/app/helper/func/func.dart';
 
 class LocalExpense {
@@ -102,6 +104,50 @@ class LocalExpense {
         if (date == before) newData.add(data[i]);
       }
       return newData;
+    } catch (e) {
+      return [];
+    }
+  }
+
+  static Future<List<ItemExpenseByCategory>> byCategory(
+    List<ExpenseData> data,
+  ) async {
+    try {
+      var items = <ItemExpenseByCategory>[];
+      var categories = <String>[];
+      for (var i = 0; i < data.length; i++) {
+        categories.add(data[i].categoryName);
+      }
+      print("cat b: $categories");
+
+      categories = categories.toSet().toList();
+      print("cat a: $categories");
+
+      for (var i = 0; i < categories.length; i++) {
+        // var cItems = <ItemExpenseByCategory>[];
+        num nominal = 0;
+        var icon = "", color = "";
+        for (var n = 0; n < data.length; n++) {
+          var cCategory = categories[i].lower();
+          var eCategory = data[n].categoryName.lower();
+          if (cCategory == eCategory) {
+            nominal = nominal + num.parse(data[n].nominal);
+            icon = data[n].categoryIcon;
+            color = data[n].categoryColor;
+          }
+        }
+        var item = ItemExpenseByCategory(
+          name: categories[i],
+          icon: icon,
+          color: color,
+          amount: nominal,
+        );
+        items.add(item);
+      }
+
+      print("items: ${items.length}");
+
+      return items;
     } catch (e) {
       return [];
     }

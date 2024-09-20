@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:moneyexpense/app/db/model/expense_by_category.dart';
 import 'package:moneyexpense/app/db/repo/category.dart';
 import 'package:moneyexpense/app/db/repo/expense.dart';
 import 'package:moneyexpense/app/db/table/expense/expense.dart';
@@ -31,12 +32,14 @@ class MainBloc extends Bloc<MainEvent, MainState> {
       var yesterday = await LocalExpense.yesterday(expenses);
       var amountToday = await LocalExpense.amountToday(today);
       var amountThisMonth = await LocalExpense.amountThisMonth(expenses);
+      var expensesByCategory = await LocalExpense.byCategory(expenses);
       emit(MainSuccess(
         expenses: expenses,
         amountToday: amountToday,
         amountThisMonth: amountThisMonth,
         today: today,
         yesterday: yesterday,
+        expensesByCategory: expensesByCategory,
       ));
     } catch (e) {
       emit(MainError());

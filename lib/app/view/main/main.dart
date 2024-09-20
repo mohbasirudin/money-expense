@@ -47,16 +47,23 @@ class _PageHomeState extends State<PageHome> {
           return Container();
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          goto(Routes.add, context: context);
+      floatingActionButton: BlocBuilder<MainBloc, MainState>(
+        builder: (context, state) {
+          if (state is MainSuccess) {
+            return FloatingActionButton(
+              onPressed: () {
+                goto(Routes.add, context: context);
+              },
+              mini: true,
+              shape: const CircleBorder(),
+              child: Image.asset(
+                BaseAssets.plus,
+                color: BaseColors.light,
+              ),
+            );
+          }
+          return Container();
         },
-        mini: true,
-        shape: const CircleBorder(),
-        child: Image.asset(
-          BaseAssets.plus,
-          color: BaseColors.light,
-        ),
       ),
     );
   }

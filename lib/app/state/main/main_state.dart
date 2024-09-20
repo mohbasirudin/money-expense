@@ -18,6 +18,7 @@ class MainSuccess extends MainState {
   final num amountThisMonth;
   final List<ExpenseData> today;
   final List<ExpenseData> yesterday;
+  final List<ItemExpenseByCategory> expensesByCategory;
 
   const MainSuccess({
     this.expenses = const [],
@@ -25,6 +26,7 @@ class MainSuccess extends MainState {
     this.amountThisMonth = 0,
     this.today = const [],
     this.yesterday = const [],
+    this.expensesByCategory = const [],
   });
 
   MainSuccess copy({
@@ -33,6 +35,7 @@ class MainSuccess extends MainState {
     var amountThisMonth,
     var today,
     var yesterday,
+    var expensesByCategory,
   }) {
     return MainSuccess(
       expenses: expenses ?? this.expenses,
@@ -40,6 +43,7 @@ class MainSuccess extends MainState {
       amountThisMonth: amountThisMonth ?? this.amountThisMonth,
       today: today ?? this.today,
       yesterday: yesterday ?? this.yesterday,
+      expensesByCategory: expensesByCategory ?? this.expensesByCategory,
     );
   }
 
@@ -50,6 +54,7 @@ class MainSuccess extends MainState {
         amountThisMonth,
         today,
         yesterday,
+        expensesByCategory,
       ];
 }
 
