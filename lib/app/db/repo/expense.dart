@@ -6,7 +6,7 @@ class LocalExpense {
 
   static Future<void> _init() async => _tb = TbExpense();
 
-  static Future<void> add({
+  static Future<bool> add({
     required String name,
     required int category,
     required String date,
@@ -21,9 +21,10 @@ class LocalExpense {
         nominal: Value(nominal),
       );
       var result = await _tb!.create(data);
-      if (result) {
-      } else {}
-    } catch (e) {}
+      return result;
+    } catch (e) {
+      return false;
+    }
   }
 
   static Future<List<ExpenseData>> all() async {

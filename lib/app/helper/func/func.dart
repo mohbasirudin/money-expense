@@ -7,9 +7,6 @@ class Func {
     String? newFormat,
   }) {
     try {
-      // final time = DateTime.parse(value).toLocal();
-      // var format = DateFormat("EEEE, dd MMMM yyyy","id_ID").format(time);
-      // return format;
       print("cdate: $value");
       final format = DateFormat(newFormat ?? "dd MM yyyy", "id_ID");
       final dateTime = DateFormat(

@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:moneyexpense/app/db/repo/category.dart';
+import 'package:moneyexpense/app/db/repo/expense.dart';
 import 'package:moneyexpense/app/db/table/category/category.dart';
 import 'package:moneyexpense/app/helper/extension/string_ext.dart';
 import 'package:moneyexpense/app/helper/func/func.dart';
@@ -21,10 +22,12 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
   ExpenseBloc() : super(ExpenseInitial()) {
     on<OnExpenseInit>(_onInit);
     on<OnExpenseReset>(_onReset);
+    on<OnExpenseReload>(_onReload);
     on<OnExpenseChangeName>(_onChangeName);
     on<OnExpenseChangeCategory>(_onChangeCategory);
     on<OnExpenseChangeDate>(_onChangeDate);
     on<OnExpenseChangeNominal>(_onChangeNominal);
+    on<OnExpenseSave>(_onSave);
   }
 
   void _onReset(var event, var emit) {
@@ -34,6 +37,25 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
     conNominal.clear();
 
     emit(ExpenseInitial());
+  }
+
+  void _onReload(var event, var emit) {
+    final state = this.state;
+    if (state is ExpenseSuccess) {
+      conName.clear();
+      conDate.clear();
+      conNominal.clear();
+
+      var categories = state.categories;
+      var indexCategory = 0;
+      conCategory.text = categories[indexCategory].name.toCapitalized();
+
+      emit(state.copy(
+        indexCategory: indexCategory,
+        enabled: false,
+        expenseDate: "",
+      ));
+    }
   }
 
   Future<void> _onInit(var event, var emit) async {
@@ -97,6 +119,19 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
     final state = this.state;
     if (state is ExpenseSuccess) {
       emit(state.copy(enabled: isEnabled()));
+    }
+  }
+
+  void _onSave(OnExpenseSave event, var emit) async {
+    final state = this.state;
+    if (state is ExpenseSuccess) {
+      var result = await LocalExpense.add(
+        name: conName.text,
+        category: state.copy().indexCategory,
+        date: state.copy().expenseDate,
+        nominal: conNominal.text,
+      );
+      event.onCallback(result);
     }
   }
 }

@@ -9,6 +9,8 @@ class ConstString {
   static const expenceDate = "Tanggal Pengeluaran";
   static const nominal = "Nominal";
   static const save = "Simpan";
+  static const success = "Berhasil";
+  static const failed = "Gagal";
   static const chooseCategory = "Pilih Kategori";
 }
 

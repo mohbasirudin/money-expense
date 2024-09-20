@@ -7,6 +7,7 @@ import 'package:moneyexpense/app/base/consts.dart';
 import 'package:moneyexpense/app/helper/extension/string_ext.dart';
 import 'package:moneyexpense/app/helper/extension/widget_ext.dart';
 import 'package:moneyexpense/app/helper/func/func.dart';
+import 'package:moneyexpense/app/helper/func/globals.dart';
 import 'package:moneyexpense/app/state/expense/expense_bloc.dart';
 import 'package:moneyexpense/app/view/add/sub/category.dart';
 import 'package:moneyexpense/app/widget/button_elevated.dart';
@@ -138,7 +139,7 @@ class _PageAddState extends State<PageAdd> {
                 context: context,
                 initialDate: initial,
                 firstDate: today.subtract(interval),
-                lastDate: today.add(interval),
+                lastDate: today,
                 initialEntryMode: DatePickerEntryMode.calendarOnly,
                 locale: const Locale("id", "ID"),
               );
@@ -161,6 +162,12 @@ class _PageAddState extends State<PageAdd> {
             padding: const EdgeInsets.only(
               top: ConsPadding.medium,
             ),
+            onTap: () {
+              bloc.add(OnExpenseSave((result) {
+                snackbar(context, result);
+                if (result) bloc.add(OnExpenseReload());
+              }));
+            },
           ),
         ],
       ),

@@ -27,3 +27,10 @@ class OnExpenseChangeName extends ExpenseEvent {}
 class OnExpenseChangeNominal extends ExpenseEvent {}
 
 class OnExpenseReset extends ExpenseEvent {}
+class OnExpenseReload extends ExpenseEvent {}
+
+class OnExpenseSave extends ExpenseEvent {
+  final Function(bool result) onCallback;
+
+  const OnExpenseSave(this.onCallback);
+}
