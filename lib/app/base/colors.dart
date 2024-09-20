@@ -12,9 +12,11 @@ class BaseColors {
   static var purple2 = _color(ColorsCode.purple2);
   static var red = _color(ColorsCode.red);
   static var green2 = _color(ColorsCode.green2);
+  static var light = Colors.white;
+  static var gray3 = _color(ColorsCode.gray3);
 }
 
-class ColorsCode{
+class ColorsCode {
   static var primary = Apps.primaryCode;
   static var yellow = "F2C94C";
   static var blue1 = "2F80ED";
@@ -25,6 +27,7 @@ class ColorsCode{
   static var purple2 = "BB6BD9";
   static var red = "EB5757";
   static var green2 = "46B5A7";
+  static var gray3 = "828282";
 }
 
 Color _color(var code) {
