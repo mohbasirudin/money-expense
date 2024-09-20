@@ -29,53 +29,51 @@ class LocalCategory {
     if (data.isEmpty) {
       var categories = [
         {
-          "name": "makanan",
+          "name": "Makanan",
           "icon": BaseAssets.pizzaSlice,
           "color": ColorsCode.yellow,
         },
         {
-          "name": "internet",
+          "name": "Internet",
           "icon": BaseAssets.rssAlt,
           "color": ColorsCode.blue3,
         },
         {
-          "name": "edukasi",
+          "name": "Edukasi",
           "icon": BaseAssets.bookOpen,
           "color": ColorsCode.orange,
         },
         {
-          "name": "hadiah",
+          "name": "Hadiah",
           "icon": BaseAssets.gift,
           "color": ColorsCode.red,
         },
         {
-          "name": "transport",
+          "name": "Transport",
           "icon": BaseAssets.carSideview,
           "color": ColorsCode.purple1,
         },
         {
-          "name": "belanja",
+          "name": "Belanja",
           "icon": BaseAssets.shoppingCart,
           "color": ColorsCode.green2,
         },
         {
-          "name": "alat rumah",
+          "name": "Alat Rumah",
           "icon": BaseAssets.home,
           "color": ColorsCode.purple2,
         },
         {
-          "name": "olahraga",
+          "name": "Olahraga",
           "icon": BaseAssets.basketBall,
           "color": ColorsCode.blue2,
         },
         {
-          "name": "hiburan",
+          "name": "Hiburan",
           "icon": BaseAssets.clapperBoard,
           "color": ColorsCode.blue1,
         },
       ];
-
-      print("category: ${categories.length}");
 
       for (var i = 0; i < categories.length; i++) {
         var category = categories[i];

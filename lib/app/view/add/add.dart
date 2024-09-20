@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moneyexpense/app/base/assets.dart';
 import 'package:moneyexpense/app/base/colors.dart';
 import 'package:moneyexpense/app/base/consts.dart';
+import 'package:moneyexpense/app/helper/extension/string_ext.dart';
 import 'package:moneyexpense/app/helper/extension/widget_ext.dart';
 import 'package:moneyexpense/app/state/expense/expense_bloc.dart';
+import 'package:moneyexpense/app/view/add/sub/category.dart';
 import 'package:moneyexpense/app/widget/button_elevated.dart';
 import 'package:moneyexpense/app/widget/error.dart';
 import 'package:moneyexpense/app/widget/field.dart';
@@ -45,7 +47,7 @@ class _PageAddState extends State<PageAdd> {
           ),
         ),
         body: BlocBuilder<ExpenseBloc, ExpenseState>(
-          builder: (context, state) {
+          builder: (_, state) {
             if (state is ExpenseLoading) return const PageLoading();
             if (state is ExpenseError) return const PageError();
             if (state is ExpenseSuccess) return _body(state);
@@ -55,8 +57,9 @@ class _PageAddState extends State<PageAdd> {
   }
 
   Widget _body(ExpenseSuccess state) {
+    var category = state.categories[state.copy().indexCategory];
     return SingleChildScrollView(
-      padding: EdgeInsets.all(ConsPadding.large),
+      padding: const EdgeInsets.all(ConsPadding.large),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,27 +70,70 @@ class _PageAddState extends State<PageAdd> {
           ),
           _form(
             controller: bloc.conCategory,
+            readOnly: true,
             preffix: IconField(
-              BaseAssets.pizzaSlice,
-              color: BaseColors.yellow,
+              category.icon,
+              color: category.color.color(),
             ),
-            suffix: Container(
-              margin: const EdgeInsets.symmetric(
-                vertical: ConsPadding.medium,
-              ),
-              width: 24,
-              height: 24,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: BaseColors.outline,
-              ),
-              child: Center(
-                child: IconField(BaseAssets.angleLeftB),
-              ),
-            ).onTap(() {}),
+            suffix: Builder(
+              builder: (context) {
+                return Container(
+                  margin: const EdgeInsets.symmetric(
+                    vertical: ConsPadding.medium,
+                  ),
+                  width: 24,
+                  height: 24,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: BaseColors.outline,
+                  ),
+                  child: Center(
+                    child: IconField(BaseAssets.angleLeftB),
+                  ),
+                ).onTap(() {
+                  // Scaffold.of(context).showBottomSheet(
+                  //   (context) => SubMenuAddCategory(
+                  //     categories: state.categories,
+                  //     onSubmit: (index) {
+                  //       bloc.add(OnExpenseChangeCategory(index));
+                  //     },
+                  //   ),
+                  //   shape: const RoundedRectangleBorder(
+                  //     borderRadius: BorderRadius.vertical(
+                  //       top: Radius.circular(ConstNum.radius),
+                  //     ),
+                  //   ),
+                  // );
+                  showModalBottomSheet(
+                    context: context,
+                    barrierColor: Colors.black26,
+                    builder: (context) {
+                      return SubMenuAddCategory(
+                        categories: state.categories,
+                        onSubmit: (index) {
+                          bloc.add(OnExpenseChangeCategory(index));
+                        },
+                      );
+                    },
+                  );
+                  // showBottomSheet(
+                  //   context: context,
+                  //   builder: (context) {
+                  //     return SubMenuAddCategory(
+                  //       categories: state.categories,
+                  //       onSubmit: (index) {
+                  //         bloc.add(OnExpenseChangeCategory(index));
+                  //       },
+                  //     );
+                  //   },
+                  // );
+                });
+              },
+            ),
           ),
           _form(
             controller: bloc.conDate,
+            readOnly: true,
             hint: ConstString.expenceDate,
             suffix: IconField(
               BaseAssets.calendarAlt,
@@ -95,6 +141,7 @@ class _PageAddState extends State<PageAdd> {
           ),
           _form(
             controller: bloc.conNominal,
+            readOnly: true,
             hint: ConstString.nominal,
           ),
           const ButtonElevated(

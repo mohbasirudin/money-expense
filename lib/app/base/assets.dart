@@ -17,6 +17,7 @@ class BaseAssets {
   static var shoppingCart = _icon("shopping_cart");
   static var gift = _icon("gift");
   static var plus = _icon("plus");
+  static var multiply = _icon("multiply");
 
   static String _icon(var name) {
     return "$_base/uil_$name.png";

@@ -9,6 +9,7 @@ class ConstString {
   static const expenceDate = "Tanggal Pengeluaran";
   static const nominal = "Nominal";
   static const save = "Simpan";
+  static const chooseCategory = "Pilih Kategori";
 }
 
 class ConstNum {
@@ -22,6 +23,7 @@ class ConsPadding {
 }
 
 class FontSize {
+  static const small = 12.0;
   static const medium = 14.0;
   static const large = 18.0;
   static const extraLarge = 24.0;
